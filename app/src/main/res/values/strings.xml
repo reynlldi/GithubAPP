@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GitHub</string>
+    <string name="searchbar_hint">Mau cari siapa nih?</string>
+    <string name="github">Github Application</string>
+    <string name="est">Est 2023</string>
+    <string name="welcome">Welcome</string>
+    <string name="repo">Repo</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
