@@ -10,8 +10,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.github.R
 import com.example.github.adapter.SectionsPagerAdapter
-import com.example.github.adapter.UserAdapter
-import com.example.github.data.response.DetailUserResponse
 import com.example.github.databinding.ActivityDetailUserBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -43,7 +41,7 @@ class DetailUserActivity : AppCompatActivity() {
             putString(EXTRA_USERNAME, username)
         }
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, data = bundle)
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, bundle)
         val viewPager: ViewPager2 = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
