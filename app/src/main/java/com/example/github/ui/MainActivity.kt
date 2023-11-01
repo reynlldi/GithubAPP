@@ -20,13 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         supportActionBar?.hide()
-
-        val layoutManager = LinearLayoutManager(this)
-        binding.rvReview.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.rvReview.addItemDecoration(itemDecoration)
 
         mainViewModel.listUser.observe(this) { user ->
             setListUsers(user)
@@ -36,6 +30,18 @@ class MainActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+        layout()
+        searchUser()
+    }
+
+    private fun layout() {
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvReview.layoutManager = layoutManager
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvReview.addItemDecoration(itemDecoration)
+    }
+
+    private fun searchUser() {
         binding.apply {
             searchView.setupWithSearchBar(searchBar)
             searchView.editText

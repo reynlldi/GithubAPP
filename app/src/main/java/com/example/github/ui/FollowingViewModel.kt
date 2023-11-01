@@ -10,8 +10,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FollowingViewModel: ViewModel() {
-    val listFollowing = MutableLiveData<List<ItemsItem>>()
+class FollowingViewModel : ViewModel() {
+    private val _listFollowing = MutableLiveData<List<ItemsItem>>()
+    val listFollowing: LiveData<List<ItemsItem>> = _listFollowing
 
     companion object {
         private const val TAG = "FollowingViewModel"
@@ -25,8 +26,11 @@ class FollowingViewModel: ViewModel() {
                 response: Response<List<ItemsItem>>
             ) {
                 if (response.isSuccessful) {
-                    listFollowing.postValue(response.body())
-                }else{
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _listFollowing.value = response.body()
+                    }
+                } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
@@ -36,9 +40,5 @@ class FollowingViewModel: ViewModel() {
             }
 
         })
-    }
-
-    fun getListFollowing(): LiveData<List<ItemsItem>> {
-        return listFollowing
     }
 }

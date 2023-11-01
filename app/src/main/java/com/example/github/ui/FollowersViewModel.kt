@@ -11,7 +11,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FollowersViewModel : ViewModel() {
-    val listFollowers = MutableLiveData<List<ItemsItem>>()
+    private val _listFollowers = MutableLiveData<List<ItemsItem>>()
+    val listFollowers: LiveData<List<ItemsItem>> = _listFollowers
 
     companion object {
         private const val TAG = "FollowersViewModel"
@@ -25,8 +26,11 @@ class FollowersViewModel : ViewModel() {
                 response: Response<List<ItemsItem>>
             ) {
                 if (response.isSuccessful) {
-                    listFollowers.postValue(response.body())
-                }else{
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _listFollowers.value = response.body()
+                    }
+                } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
@@ -36,9 +40,5 @@ class FollowersViewModel : ViewModel() {
             }
 
         })
-    }
-
-    fun getListFollowers(): LiveData<List<ItemsItem>>{
-        return listFollowers
     }
 }

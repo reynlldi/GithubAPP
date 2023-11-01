@@ -10,8 +10,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel: ViewModel() {
-    val detailUser = MutableLiveData<DetailUserResponse>()
+class DetailUserViewModel : ViewModel() {
+    private val _detailUser = MutableLiveData<DetailUserResponse>()
+    val detailUser: LiveData<DetailUserResponse> = _detailUser
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -29,9 +30,12 @@ class DetailUserViewModel: ViewModel() {
                 response: Response<DetailUserResponse>
             ) {
                 _isLoading.value = false
-                if (response.isSuccessful){
-                    detailUser.postValue(response.body())
-                }else{
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        _detailUser.postValue(response.body())
+                    }
+                } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
@@ -42,9 +46,5 @@ class DetailUserViewModel: ViewModel() {
             }
 
         })
-    }
-
-    fun getDetailUser(): LiveData<DetailUserResponse>{
-        return detailUser
     }
 }

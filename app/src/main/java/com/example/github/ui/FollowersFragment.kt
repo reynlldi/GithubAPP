@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github.R
 import com.example.github.adapter.UserAdapter
+import com.example.github.data.response.ItemsItem
 import com.example.github.databinding.FragmentFollowBinding
 
 class FollowersFragment : Fragment(R.layout.fragment_follow) {
@@ -16,24 +17,27 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentFollowBinding.bind(view)
         val args = arguments
         val username = args?.getString(DetailUserActivity.EXTRA_USERNAME).toString()
 
-        _binding = FragmentFollowBinding.bind(view)
-
-        val adapter = UserAdapter()
-
-        binding.apply {
-            rvUser.setHasFixedSize(true)
-            rvUser.layoutManager = LinearLayoutManager(activity)
-            rvUser.adapter = adapter
-        }
         followersViewModel.setListFollowers(username)
-        followersViewModel.getListFollowers().observe(viewLifecycleOwner) {
-            if (it != null) {
-                adapter.submitList(it)
-            }
+        followersViewModel.listFollowers.observe(viewLifecycleOwner) { listFollowers ->
+            setListFollowers(listFollowers)
         }
+
+        layout()
+    }
+
+    private fun layout() {
+        val layoutManager = LinearLayoutManager(activity)
+        binding.rvUser.layoutManager = layoutManager
+    }
+
+    private fun setListFollowers(listFollowers: List<ItemsItem>) {
+        val adapter = UserAdapter()
+        adapter.submitList(listFollowers)
+        binding.rvUser.adapter = adapter
     }
 
     override fun onDestroyView() {
