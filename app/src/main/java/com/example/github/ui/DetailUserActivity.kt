@@ -1,8 +1,11 @@
 package com.example.github.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -20,6 +23,7 @@ class DetailUserActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
+
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.followers,
@@ -45,24 +49,24 @@ class DetailUserActivity : AppCompatActivity() {
         val viewPager: ViewPager2 = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs
-        TabLayoutMediator(tabs,viewPager){tab, position ->
-            tab.text= resources.getString(TAB_TITLES[position])
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
         detailUserViewModel.setDetailUser(username.toString())
-        detailUserViewModel.detailUser.observe(this) {
-            if (it != null) {
+        detailUserViewModel.detailUser.observe(this) { detailUser ->
+            if (detailUser != null) {
                 binding.apply {
                     Glide.with(this@DetailUserActivity)
-                        .load(it.avatarUrl)
+                        .load(detailUser.avatarUrl)
                         .centerCrop()
                         .into(tvUser)
-                    tvUsername.text = it.name
-                    tvBio.text = it.bio
-                    tvLocation.text = it.location
-                    "${it.followers} \nFollowers".also { tvFollowers.text = it }
-                    "${it.following} \nFollowing".also { tvFollowing.text = it }
-                    "${it.publicRepos} \nRepo".also { tvRepo.text = it }
+                    tvUsername.text = detailUser.name
+                    tvBio.text = detailUser.bio
+                    tvLocation.text = detailUser.location
+                    "${detailUser.followers} \nFollowers".also { tvFollowers.text = it }
+                    "${detailUser.following} \nFollowing".also { tvFollowing.text = it }
+                    "${detailUser.publicRepos} \nRepo".also { tvRepo.text = it }
                 }
             }
         }
@@ -70,6 +74,21 @@ class DetailUserActivity : AppCompatActivity() {
         detailUserViewModel.isLoading.observe(this) {
             showLoading(it)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.item_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.darkMode -> {
+                val intent = Intent(this@DetailUserActivity, SettingActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

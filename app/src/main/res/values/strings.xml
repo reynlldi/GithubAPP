@@ -7,6 +7,8 @@
     <string name="repo">Repo</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="setting">Setting</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
