@@ -10,6 +10,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.example.github.databinding.ActivitySplashBinding
+import com.example.github.helper.SettingPreferences
+import com.example.github.helper.ViewModelFactory
+import com.example.github.helper.dataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

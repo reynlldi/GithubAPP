@@ -6,6 +6,9 @@ import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.example.github.databinding.ActivitySettingBinding
+import com.example.github.helper.SettingPreferences
+import com.example.github.helper.ViewModelFactory
+import com.example.github.helper.dataStore
 
 class SettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingBinding
