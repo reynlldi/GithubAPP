@@ -87,6 +87,10 @@ class DetailUserActivity : AppCompatActivity() {
                 val intent = Intent(this@DetailUserActivity, SettingActivity::class.java)
                 startActivity(intent)
             }
+            R.id.favorite -> {
+                val intent = Intent(this@DetailUserActivity, FavoriteActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

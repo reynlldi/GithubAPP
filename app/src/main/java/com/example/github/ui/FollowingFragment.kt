@@ -13,7 +13,7 @@ import com.example.github.databinding.FragmentFollowBinding
 class FollowingFragment : Fragment(R.layout.fragment_follow) {
     private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding!!
-    private val followingViewModel: FollowingViewModel by viewModels()
+    private val followingViewModel by viewModels<FollowingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
